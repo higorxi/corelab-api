@@ -8,6 +8,6 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    // Adicione regras específicas do seu projeto, se necessário
+    
   },
 }
