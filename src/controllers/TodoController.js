@@ -6,8 +6,8 @@ exports.getAllTodos = async (req, res) => {
     const todos = await Todo.find();
     res.json(todos);
   } catch (error) {
-    console.error('Error getting todos:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao obter to-dos', error);
+    res.status(500).send('Erro no servidor');
   }
 };
 
@@ -17,10 +17,21 @@ exports.getNotFavorites = async (req, res) => {
     const notFavorites = await Todo.find({ favorite: false });
     res.json(notFavorites);
   } catch (error) {
-    console.error('Error getting not favorites:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao obter to-do não favoritados:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
+
+// Obtém todos os to-dos que estão feitos
+exports.getDoneTodos = async (req, res) => {
+    try {
+      const doneTodos = await Todo.find({ done: true });
+      res.json(doneTodos);
+    } catch (error) {
+      console.error('Erro ao obter to-dos feitos:', error);
+      res.status(500).send('Erro no servidor');
+    }
+  };
 
 // Cria um novo To-do
 exports.createTodo = async (req, res) => {
@@ -30,8 +41,8 @@ exports.createTodo = async (req, res) => {
     const savedTodo = await newTodo.save();
     res.json(savedTodo);
   } catch (error) {
-    console.error('Error creating todo:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao criar to-do:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
 
@@ -42,8 +53,8 @@ exports.editTodo = async (req, res) => {
     const updatedTodo = await Todo.findByIdAndUpdate(id, req.body, { new: true });
     res.json(updatedTodo);
   } catch (error) {
-    console.error('Error editing todo:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao editar to-do:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
 
@@ -55,8 +66,8 @@ exports.changeColor = async (req, res) => {
     const updatedTodo = await Todo.findByIdAndUpdate(id, { color }, { new: true });
     res.json(updatedTodo);
   } catch (error) {
-    console.error('Error changing color:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao mudar cor do to-do:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
 
@@ -65,10 +76,10 @@ exports.deleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
     await Todo.findByIdAndDelete(id);
-    res.json({ message: 'Todo deleted successfully' });
+    res.json({ message: 'Todo deletado com successo' });
   } catch (error) {
-    console.error('Error deleting todo:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao deletar to-do:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
 
@@ -78,8 +89,8 @@ exports.getFavorites = async (req, res) => {
     const favorites = await Todo.find({ favorite: true });
     res.json(favorites);
   } catch (error) {
-    console.error('Error getting favorites:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao obter to-do favoritos:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
 
@@ -90,7 +101,34 @@ exports.filterByColor = async (req, res) => {
     const filteredTodos = await Todo.find({ color });
     res.json(filteredTodos);
   } catch (error) {
-    console.error('Error filtering by color:', error);
-    res.status(500).send('Server Error');
+    console.error('Erro ao filtrar por cor:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
+
+// Atualiza status de feito do to-do 
+exports.updateTodoStatus = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { done } = req.body;
+  
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'ID do to-do inválido' });
+      }
+  
+      const updatedTodo = await Todo.findByIdAndUpdate(
+        id,
+        { $set: { done } },
+        { new: true }
+      );
+  
+      if (!updatedTodo) {
+        return res.status(404).json({ error: 'To-do não encontrado' });
+      }
+  
+      res.json(updatedTodo);
+    } catch (error) {
+      console.error('Erro ao atualizar status do To-do:', error);
+      res.status(500).send('Erro no servidor');
+    }
+  };
