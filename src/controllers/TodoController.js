@@ -1,6 +1,6 @@
 const Todo = require('../models/TodoModel');
 
-// Obtém todos os Todos
+// Obtém todos os To-do
 exports.getAllTodos = async (req, res) => {
   try {
     const todos = await Todo.find();
@@ -11,7 +11,7 @@ exports.getAllTodos = async (req, res) => {
   }
 };
 
-// Obtém todos os Todos não favoritados
+// Obtém todos os To-dos não favoritados
 exports.getNotFavorites = async (req, res) => {
   try {
     const notFavorites = await Todo.find({ favorite: false });
@@ -22,7 +22,7 @@ exports.getNotFavorites = async (req, res) => {
   }
 };
 
-// Cria um novo Todo
+// Cria um novo To-do
 exports.createTodo = async (req, res) => {
   try {
     const { title, description, color, favorite } = req.body;
@@ -35,7 +35,7 @@ exports.createTodo = async (req, res) => {
   }
 };
 
-// Edita o conteúdo de um Todo
+// Edita o conteúdo do To-do
 exports.editTodo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -47,7 +47,7 @@ exports.editTodo = async (req, res) => {
   }
 };
 
-// Altera a cor de um Todo
+// Altera a cor do To-do
 exports.changeColor = async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,7 +60,7 @@ exports.changeColor = async (req, res) => {
   }
 };
 
-// Exclui um Todo
+// Exclui um To-do
 exports.deleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
