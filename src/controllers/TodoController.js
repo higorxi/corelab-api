@@ -25,7 +25,7 @@ exports.getNotFavorites = async (req, res) => {
 // Obtém todos os to-dos que estão feitos
 exports.getDoneTodos = async (req, res) => {
     try {
-      const doneTodos = await Todo.find({ done: true });
+      const doneTodos = await Todo.find({ feito: true });
       res.json(doneTodos);
     } catch (error) {
       console.error('Erro ao obter to-dos feitos:', error);
@@ -36,8 +36,8 @@ exports.getDoneTodos = async (req, res) => {
 // Cria um novo To-do
 exports.createTodo = async (req, res) => {
   try {
-    const { title, description, color, favorite } = req.body;
-    const newTodo = new Todo({ title, description, favorite,color });
+    const { title, description, color, favorite, feito } = req.body;
+    const newTodo = new Todo({ title, description, favorite, color , feito });
     const savedTodo = await newTodo.save();
     res.json(savedTodo);
   } catch (error) {

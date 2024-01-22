@@ -15,7 +15,7 @@ const {
 
 router.get('/', getAllTodos)
 router.get('/not-favorites', getNotFavorites)
-router.get('/to-dofeito', getDoneTodos)
+router.get('/to-dofeitos', getDoneTodos)
 router.post('/create', createTodo)
 router.put('/edit/:id', editTodo)
 router.put('/changeColor/:id', changeColor)

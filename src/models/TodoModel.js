@@ -11,7 +11,7 @@ const todoSchema = new mongoose.Schema({
     default: true,
   },
   color: String,
-  Feito: {
+  feito: {
     type: Boolean,
     default: false,
   },
