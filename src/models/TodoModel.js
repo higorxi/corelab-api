@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const todoSchema = new mongoose.Schema({
   title: {
@@ -11,8 +11,8 @@ const todoSchema = new mongoose.Schema({
     default: true,
   },
   color: String,
-});
+})
 
-const Todo = mongoose.model('Todo', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema)
 
-module.exports = Todo;
+module.exports = Todo
